@@ -2,30 +2,28 @@
   <img src="https://imgur.com/RDJaX9P.png" alt="Microsoft Active Directory Logo"/>
 </p>
 
-# How to Install and Deploy Active Directory in the Cloud (Azure)
+# How to Install and Configure a DHCP Server on Windows Server 2022 
 
 This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.
 
 ## Environments and Technologies Used
 - Microsoft Azure (Virtual Machines/Compute)
 - Remote Desktop
-- Active Directory Domain Services
+  
 
 ## Operating Systems Used
 - Windows Server 2022
 - Windows 10 (21H2)
 
-## High-Level Deployment and Configuration Steps
-- Create a Windows 10 and Windows Server 2022 Virtual Machine in Azure
-- Enable Active Directory Domain Services on the Windows Server VM
-- Join the Windows 10 client machine to the Domain Controller on the Windows Server VM
-- Allow non-administrative users to access Remote Desktop
+## High-Level Installation and Configuration Steps
+- Configure a static IP address for the server
+
 
 ## Deployment and Configuration Steps
 
-### Creating Our Virtual Machines
+### Configure a Static IP
 
-1. Set up a Windows Server 2022 virtual machine that will host our domain controller. In the Azure portal, go to **Virtual Machines** → **Create** → **Azure Virtual Machine**.
+1. go to the Start menu. Type in view network connections. Right click on the interface and select 'Properties'. Select IPv4 and then click 'Properties'. Fill in a static ip address. Along with the subnet mask and Default Gateway. Also assign a static IP for the DNS Server. Then restart the system.
 2. Create a new resource group named `active-directory-rg`. Name the VM `active-directory-dc`. Set the region to West US 2, the image to Windows Server 2022, and the size to Standard_D2s_v3 (2 vCPUs, 8 GiB memory). Choose a username and password, then check the licensing agreement. Go to the networking tab, name the VNet `active-directory-vnet`, and click **Review + Create**.
    <p align="center">
      <img src="https://imgur.com/XrjrPji.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
