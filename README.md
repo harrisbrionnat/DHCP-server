@@ -43,9 +43,7 @@ Prior to this tutorial, you must have created a  Windows Server 2020 Virtual Mac
     
 7. Log into the client machine operating Windows 10. Go to start and view network connections. Right click on the interface and select 'Properties' Select Ipv4 and then 'Properties' Make sure your computer is set to obtain ip addresses automatically.
    
-   <p align="center">
-     <img src="https://imgur.com/l2geFfX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-   </p>
+   
 
 
 
