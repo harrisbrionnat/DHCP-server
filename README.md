@@ -24,26 +24,36 @@ This tutorial outlines the implementation of on-premises Active Directory within
 1. go to the Start menu. Type in view network connections. Right click on the interface and select 'Properties'. Select IPv4 and then click 'Properties'. Fill in a static ip address. Along with the subnet mask and Default Gateway. Also assign a static IP for the DNS Server. Then restart the system. I just used the IP addresses inherited from my Azure virtual machine.
    
 2. Click on Manage. Click on 'add roles and features' Select next on the first screen. On the next screen select 'role based or feature based installation'. Select the correct server. Select DHCP server. Make sure the box to include management tools is selected. Then click 'Add Features'. Keep clicking next until you get to the 'Confirmation' Tab. Make sure the box is checked to restart the destination server is checked and install.
-3. Click the yellow caution sign and click 'complete DHCP configuration'. On the box that pops up, click 'commit'.
+3. Click the yellow caution sign and click 'complete DHCP configuration'. On the box that pops up, click 'commit'. Then, restart the computer.
    
    <p align="center">
      <img src="https://imgur.com/1hM7PZM.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
-5. Set up a client machine to connect to the domain controller on Windows Server. Again, select **Create** on the Virtual Machines tab, using the same resource group. Name it `active-directory-client`, and set the region to West US 2. Use Windows 10 as the image, and the size as Standard D2s v3 (2 vCPUs, 8 GiB memory). Choose a username and password, check the licensing agreement, and ensure it is in the same network as the Windows Server VM. Click **Review + Create**.
-6. Set the Domain Controller's NIC's private IP address to static. Go to the Virtual Machines tab, click on `active-directory-dc`, then go to **Networking** → **Network Settings**. Click on the virtual NIC, then on **ip-config1**. Change the private IP setting from dynamic to static.
-7. For testing purposes, disable the Windows Firewall on `active-directory-dc`. Once logged in to the VM, right-click the start menu and select **Run**. Type `wf.msc`, click **Windows Defender Firewall Properties**, and turn off the firewall for the Domain, Private, and Public Profile tabs.
+5. Now, we can configure DHCP settings. On the Server Manager, go to 'Tools' and then 'DHCP'. Click on the server name and then right click on IPv4. Select 'new scope'. Select next' on the wizard. Add a scope name and description. Type in a starting IP and an ending ip ip for your scope. The add in the subnet mask. Click 'next'. If you want to exclude an IP from that range, specify on the screen. I have not, as my DHCP server and default Gateway ip does not fall withing the DHCP scope created. Set the lease duration. I kept the default--which is 8. Keep clicking next until you get to the active scope screen. Then click 'Yes, I want to active now'.
+    <p align="center">
+     <img src="https://imgur.com/XNmmNKs.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+   </p>
+   <p align="center">
+     <img src="https://imgur.com/UPkX3Cr.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+   </p>
+   <p align="center">
+     <img src="https://imgur.com/t3Dhxf0.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+   </p>
+    
+7. Set the Domain Controller's NIC's private IP address to static. Go to the Virtual Machines tab, click on `active-directory-dc`, then go to **Networking** → **Network Settings**. Click on the virtual NIC, then on **ip-config1**. Change the private IP setting from dynamic to static.
+8. For testing purposes, disable the Windows Firewall on `active-directory-dc`. Once logged in to the VM, right-click the start menu and select **Run**. Type `wf.msc`, click **Windows Defender Firewall Properties**, and turn off the firewall for the Domain, Private, and Public Profile tabs.
    <p align="center">
      <img src="https://imgur.com/l2geFfX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
-8. Set `active-directory-client`'s DNS server to `active-directory-dc`'s private IP address. On `active-directory-client`, go to **Networking** → **Network Settings**. Click on the virtual NIC, then go to **DNS Servers**, choose 'Custom', and enter `active-directory-dc`'s private IP. Log into `active-directory-client` and ping `active-directory-dc`'s private IP address. Restart `active-directory-client` from the Azure Portal. You can run `ipconfig /all` to check if the DNS settings reflect the domain controller's private IP.
+9. Set `active-directory-client`'s DNS server to `active-directory-dc`'s private IP address. On `active-directory-client`, go to **Networking** → **Network Settings**. Click on the virtual NIC, then go to **DNS Servers**, choose 'Custom', and enter `active-directory-dc`'s private IP. Log into `active-directory-client` and ping `active-directory-dc`'s private IP address. Restart `active-directory-client` from the Azure Portal. You can run `ipconfig /all` to check if the DNS settings reflect the domain controller's private IP.
    <p align="center">
      <img src="https://imgur.com/8DriULG.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
-9. Install Active Directory Domain Services on `active-directory-dc`. Once logged into the VM, go to **Server Manager**, then **Add Roles and Features**. Click next until you reach **Select Server Roles**. Check **Active Directory Domain Services** and then click **Install**.
+10. Install Active Directory Domain Services on `active-directory-dc`. Once logged into the VM, go to **Server Manager**, then **Add Roles and Features**. Click next until you reach **Select Server Roles**. Check **Active Directory Domain Services** and then click **Install**.
    <p align="center">
      <img src="https://imgur.com/CicuXFZ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
-10. Promote `active-directory-dc` to a domain controller. In Server Manager, click the flag in the upper right corner. Select **Promote this server to a domain controller**, create a new forest with the name `sampledomain.com`, and create a password. Click through the prompts and install. The computer should automatically restart.
+11. Promote `active-directory-dc` to a domain controller. In Server Manager, click the flag in the upper right corner. Select **Promote this server to a domain controller**, create a new forest with the name `sampledomain.com`, and create a password. Click through the prompts and install. The computer should automatically restart.
    <p align="center">
      <img src="https://imgur.com/JqtkKVX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
