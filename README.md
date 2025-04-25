@@ -15,8 +15,9 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Windows Server 2022
 - Windows 10 (21H2)
 
-## High-Level Installation and Configuration Steps
-- Configure a static IP address for the server
+
+Prior to this tutorial, you must have created a  Windows Server 2020 Virtual Machine and Windows 10 or 11 Virtual Machine and put them in the same network.
+
 
 
 ## Deployment and Configuration Steps
@@ -40,8 +41,8 @@ This tutorial outlines the implementation of on-premises Active Directory within
      <img src="https://imgur.com/t3Dhxf0.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
     
-7. Set the Domain Controller's NIC's private IP address to static. Go to the Virtual Machines tab, click on `active-directory-dc`, then go to **Networking** → **Network Settings**. Click on the virtual NIC, then on **ip-config1**. Change the private IP setting from dynamic to static.
-8. For testing purposes, disable the Windows Firewall on `active-directory-dc`. Once logged in to the VM, right-click the start menu and select **Run**. Type `wf.msc`, click **Windows Defender Firewall Properties**, and turn off the firewall for the Domain, Private, and Public Profile tabs.
+7. Log into the client machine operating Windows 10. Go to start and view network connections. Right click on the interface and select 'Properties' Select Ipv4 and then 'Properties' Make sure your computer is set to obtain ip addresses automatically.
+   
    <p align="center">
      <img src="https://imgur.com/l2geFfX.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
    </p>
